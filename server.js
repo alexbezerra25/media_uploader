@@ -1,6 +1,4 @@
-const https = require("https");
 const http = require("http");
-const fs = require("fs");
 const express = require("express");
 const path = require("path");
 const multer = require("multer");
@@ -8,8 +6,6 @@ const cors = require("cors");
 const cuid = require("cuid");
 const { unlink } = require("fs/promises");
 require("dotenv").config();
-
-const MODE = process.env.MODE;
 
 app = express();
 app.use(cors());
@@ -105,23 +101,7 @@ app.delete("/upload", async (req, res) => {
   }
 });
 
-if (MODE === "dev") {
-  http.createServer(app).listen(4000, () => {
-    console.log("Uploader HTTP is running at port 4000");
-  });
-} else {
-    // Use HTTPS
-  const privateKey = fs.readFileSync(
-    process.env.SSL_KEY_PATH,
-    "utf8"
-  );
-  const certificate = fs.readFileSync(
-    process.env.SSL_CERTIFICATE_PATH,
-    "utf8"
-  );
-  const credentials = { key: privateKey, cert: certificate };
 
-  https.createServer(credentials, app).listen(4000, () => {
-    console.log("Uploader HTTPS is running at port 4000");
-  });
-}
+http.createServer(app).listen(4000, () => {
+console.log("Uploader is running at port 4000");
+});
