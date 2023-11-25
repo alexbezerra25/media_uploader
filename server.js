@@ -29,7 +29,7 @@ const upload = multer({ storage });
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.post("/upload", upload.single("file"), (req, res) => {
+app.post("/", upload.single("file"), (req, res) => {
   if (!req.file) {
     res.status(400).json({ msg: "Nenhum arquivo recebido." });
   }
@@ -42,7 +42,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
   res.status(200).json({ fileUrl: fileUrl });
 });
 
-app.put("/upload", upload.single("file"), async (req, res) => {
+app.put("/", upload.single("file"), async (req, res) => {
   if (!req.file) {
     res.status(400).json({ msg: "Nenhum arquivo recebido." });
   }
@@ -80,7 +80,7 @@ app.put("/upload", upload.single("file"), async (req, res) => {
   }
 });
 
-app.delete("/upload", async (req, res) => {
+app.delete("/", async (req, res) => {
   if (!req?.body?.fileUrl) {
     res.status(400).json({ msg: "Nenhuma URL recebida." });
   }
